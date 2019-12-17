@@ -5,7 +5,7 @@ const svgCaptcha = require("svg-captcha");
 const session = require('express-session')
 
 
-app.use(session({ secret: 'test', saveUninitialized: true, resave: true }));
+app.use(session({ secret: 'test' }));
 
 app.get('/getCaptcha', (req, res) => {
     const captcha = svgCaptcha.create();
@@ -21,13 +21,16 @@ app.get('/getCaptcha', (req, res) => {
 app.get('/login', (req, res) => {
     console.log(req.session)
     let status = 'Invalid Username or Password';
+    let menus = [];
     if (req.query.username === 'admin' && req.query.password === 'admin') {
         status = 'Success';
+        menus = [{ id: '123', displayName: 'Dashboard', subMenu: [{ id: '456', displayName: 'Secretary Dashboard' }] }]
     }
     const respObj = {
         username: req.query.username,
         password: req.query.password,
-        status
+        status,
+        menuMaster: menus || 
     }
     return res.json(respObj)
 });
