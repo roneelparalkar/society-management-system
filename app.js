@@ -30,7 +30,7 @@ app.get('/login', (req, res) => {
         username: req.query.username,
         password: req.query.password,
         status,
-        menuMaster: menus || 
+        menuMaster: menus
     }
     return res.json(respObj)
 });
